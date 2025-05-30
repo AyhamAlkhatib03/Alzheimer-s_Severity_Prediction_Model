@@ -1,6 +1,9 @@
 # 🧠 Alzheimer's MRI Classification with Augmented Dataset
 
-This project leverages **Convolutional Neural Networks (CNNs)** to classify MRI brain scans into four stages of Alzheimer's Disease using the **Augmented Alzheimer's MRI Dataset.** The pipeline follows a structured deep learning workflow including EDA, preprocessing, augmentation, CNN modeling, evaluation, and visualization.
+This project leverages **Convolutional Neural Networks (CNNs)** to classify MRI brain scans into four stages of Alzheimer's Disease using the **Augmented Alzheimer's MRI Dataset.** The pipeline follows a structured deep learning workflow including EDA, preprocessing, augmentation, CNN modeling, evaluation, and visualization. 
+
+## Collaborators
+- Rahul Pangali
 
 ---
 
