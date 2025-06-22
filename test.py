@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
+import pytest
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
-import unittest
 
 def preprocess_image(img):
     img = cv2.resize(img, (224, 224))
@@ -11,21 +11,16 @@ def preprocess_image(img):
     img = preprocess_input(img)
     return img
 
-class TestPreprocessing(unittest.TestCase):
-    def test_preprocess_image_output_shape(self):
-        dummy_img = np.random.randint(0, 256, (300, 300, 3), dtype=np.uint8)
-        processed = preprocess_image(dummy_img)
-        self.assertEqual(processed.shape, (224, 224, 3))
+@pytest.mark.parametrize("shape", [
+    (300, 300, 3),   # RGB
+    (300, 300)       # Grayscale
+])
+def test_preprocess_image_output_shape(shape):
+    dummy_img = np.random.randint(0, 256, shape, dtype=np.uint8)
+    processed = preprocess_image(dummy_img)
+    assert processed.shape == (224, 224, 3)
 
-    def test_preprocess_image_value_range(self):
-        dummy_img = np.random.randint(0, 256, (300, 300, 3), dtype=np.uint8)
-        processed = preprocess_image(dummy_img)
-        self.assertTrue(np.max(processed) <= 1.0 and np.min(processed) >= -1.0)
-
-    def test_preprocess_grayscale_conversion(self):
-        dummy_gray = np.random.randint(0, 256, (300, 300), dtype=np.uint8)
-        processed = preprocess_image(dummy_gray)
-        self.assertEqual(processed.shape, (224, 224, 3))
-
-if __name__ == "__main__":
-    unittest.main(argv=[''], verbosity=2, exit=False)
+def test_preprocess_image_value_range():
+    dummy_img = np.random.randint(0, 256, (300, 300, 3), dtype=np.uint8)
+    processed = preprocess_image(dummy_img)
+    assert processed.max() <= 1.0 and processed.min() >= -1.0
